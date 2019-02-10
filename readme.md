@@ -1,9 +1,7 @@
-Install thor
-Install web3-gear
-Install truffle
+Install thor, web3-gear and truffle
 
-truffle compile --all
-truffle migrate --reset
+`truffle compile --all`
+`truffle migrate --reset`
 
-cd client/
-npm run start
+`cd client/`
+`npm run start`
