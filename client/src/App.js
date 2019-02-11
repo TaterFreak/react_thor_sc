@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BasicContract from "./contracts/BasicContract.json";
 import getWeb3 from "./utils/getWeb3";
+import Bet from './contracts/Bet.json';
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
@@ -12,7 +13,7 @@ class App extends Component {
         const [cometAccount] = await window.thor.enable();
         return cometAccount
       } catch(e) {
-          console.log(`User rejected reques ${e}`);
+          console.log(`User rejected request ${e}`);
           //handle error
       }
     }
@@ -25,14 +26,30 @@ class App extends Component {
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
       const balance = await web3.eth.getBalance(accounts[0]);  
-      const network = BasicContract.networks[5777];
-      console.log(web3)
+      const network = Bet.networks[5777];
+
+      await web3.eth.getChainTag().then(chainTagHex => {
+        const chainTag = parseInt(chainTagHex, 16)
+          switch (chainTag) {
+            case 74:
+              console.log('This is mainnet')
+              break
+            case 39:
+              console.log('This is testnet')
+              break
+            case 199:
+              console.log('This is localhost.')
+              break
+            default:
+              console.log('This is an unknown network.')
+          }
+        })
+
       const instance = new web3.eth.Contract(
-        BasicContract.abi,
+        Bet.abi,
         network.address
       );
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
+
       this.setState({ web3, accounts, balance, 'contract': instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -46,18 +63,11 @@ class App extends Component {
     const recepient = document.getElementById('address').value;
     const amount = document.getElementById('amount').value;
 
-    web3.eth.sendTransaction({
+    /*web3.eth.sendTransaction({
       from: accounts[0],
       to: recepient,
       value: amount
-    }).then(res=>console.log(res))
-
-    contract.methods.transfer(100).send({
-      from: accounts[0]
-    });
-
-    console.log(await contract.methods.get().call())
-    console.log('sent')
+    }).then(res=>console.log(res))*/
   }
 
   render() {

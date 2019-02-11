@@ -1,4 +1,5 @@
 import { thorify } from 'thorify';
+import { extend } from 'thorify/dist/extend'
 import Web3 from "web3";
 
 const getWeb3 = () =>
@@ -8,6 +9,7 @@ const getWeb3 = () =>
       // Modern dapp browsers... 
       if (window.thor) {
         const web3js = new Web3(window.thor);
+        await extend(web3js)
         resolve(web3js)
       }
       // Fallback to localhost; use dev console port by default...
