@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import BasicContract from "./contracts/BasicContract.json";
 import getWeb3 from "./utils/getWeb3";
 import Bet from './contracts/Bet.json';
 

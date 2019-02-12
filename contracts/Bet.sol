@@ -81,8 +81,14 @@ contract Bet {
 		return game.taker.guess;
 	}
 
+	function getPot() public view returns (uint256) {
+		checkPermissions(msg.sender);
+		return address(this).balance;
+	}
+
 	function generateBetOutcome() private {
-		game.outcome = uint(blockhash(block.number - 1))%10 + 1;
+		game.outcome = uint(10);
+		//game.outcome = uint(blockhash(block.number - 1))%10 + 1;
 		game.status = STATUS_FINISHED;
 
 		if (game.originator.guess == game.taker.guess) {
