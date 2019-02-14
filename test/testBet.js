@@ -7,7 +7,7 @@ contract("Bet", accounts => {
 	const betOriginator = accounts[8];
 	const betTaker = accounts[9];
 	const badActor = accounts[10];
-	const originatorGuess = 1;
+	const originatorGuess = 11;
 	const takerGuess = 1;
  
 	const originatorBalanceBeforeBet = web3.eth.getBalance(betOriginator);
@@ -127,13 +127,12 @@ contract("Bet", accounts => {
 					let gain = await originatorBalanceBeforeBet
 						.then(res => {
 							console.log("originator gain: " + (originatorBalanceAfterPayout - res));
-							return originatorBalanceAfterPayout - res
+							return originatorBalanceAfterPayout - res;
 						})
 						.then(res => {
-							return res / betAmountInVet
+							return res / betAmountInVet;
 						})
 						.then(res => {
-							console.log(res > 0.9);
 							return res > 0.9;
 						})
 
@@ -149,11 +148,10 @@ contract("Bet", accounts => {
 							return takerBalanceAfterPayout - res;
 						})
 						.then(res => {
-							return res / betAmountInVet
+							return res / betAmountInVet;
 						})
 						.then(res => {
-							console.log(res > 0.9);
-							return res > 0.9
+							return res > 0.9;
 						})
 
 					assert.equal(
@@ -164,13 +162,10 @@ contract("Bet", accounts => {
 				} else {
 					let takerDelta = await takerBalanceBeforeBet
 						.then(res => {
-							console.log(res)
-							console.log(takerBalanceAfterPayout)
-							console.log(takerBalanceAfterPayout - res)
 							return takerBalanceAfterPayout - res;
 						})
 						.then(res => {
-							return res == 0;
+							return res < 0.1;
 						})
 
 					let originatorDelta = await originatorBalanceBeforeBet
@@ -178,7 +173,7 @@ contract("Bet", accounts => {
 							return originatorBalanceAfterPayout - res;
 						})
 						.then(res => {
-							return res == 0;
+							return res < 0.1;
 						});
 
 					assert.equal(
@@ -186,7 +181,7 @@ contract("Bet", accounts => {
 						true,
 						"Balance after payout for a tied bet should be within 1% of original balance"
 					);
-				}
+				};
 			});
 		});
 	});
